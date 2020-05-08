@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>EMSD Smart Registry Call System</title>
+    <meta name="mobile-web-app-capable" content="yes">
+    <style>
+    img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    table {
+      width: 100%;
+    }    
+    table.workingPanel {
+        margin-left:auto; 
+        margin-right:auto;
+      width: 100%;
+      border: 1px solid #90E0EF;
+      border-radius: 1em 1em 1em 1em;
+      background-color: white;
+    }    
+    td {
+      vertical-align: center;
+      text-align: center;
+      padding: 15px;
+    }    
+    .liftBtn {
+        height: 6em;
+    }
+    button {
+      background-color: #0077B6; /* Green */
+      border: none;
+      color: white;
+      width: 100%;
+      word-wrap: break-word;
+      padding: 32px 32px;
+      text-align: center;
+      text-decoration: none;
+      /*display: inline-block;*/
+      font-size: 300%;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 0.6em 0.6em 0.6em 0.6em;
+      }
+    button:hover {
+      background-color: #ddd;
+      color: black;
+      border-radius: 0.6em 0.6em 0.6em 0.6em;
+    }
+    .pixelated {
+      -ms-interpolation-mode: nearest-neighbor;
+      image-rendering: pixelated;
+    }
+    .floorLabel{
+      font-size: 600%;
+      font-weight: bold;
+      color: red;
+    }
+    </style>
+    <link 	rel="icon" type="image/ico" href="img/favicon.ico">
+    <link	rel="apple-touch-icon" sizes="128x128" href="img/EMSDlogo1.png">
+    <link	rel="shortcut icon" sizes="192x192" href="img/EMSDlogo1.png">
+    </head>
+    <body bgcolor="#caf0f8">
+        <img src="img/EMSDlogoT.png" class="center" style="width:80%;float:right"/>
+        <table class="workingPanel center" id="qr" onclick="showButtons()" style="visibility: collapse;">
+            <tr><td class="center"><img id="imgQR" src="img/GF.png" class="pixelated" style="width:70%; border-radius: 2em; border: 2px solid #0077B6; padding: 50px;" /></td></tr>
+            <tr><td class="center"><P class="floorLabel" id="labQR">&nbsp</P></td></tr>
+        </table>
+        <table class="workingPanel center" id="btns">
+            <tbody>
+              <tr>
+                <td align="center"><button id="6" class="liftBtn" onclick="showPic(this.id)">&nbsp6/F&nbsp </button></td>
+                <td align="center"><button id="7" class="liftBtn" onclick="showPic(this.id)">&nbsp7/F&nbsp </button></td>
+                <td align="center"></td>
+              </tr>
+              <tr>
+                <td align="center"><button id="3" class="liftBtn" onclick="showPic(this.id)">&nbsp3/F&nbsp </button></td>
+                <td align="center"><button id="4" class="liftBtn" onclick="showPic(this.id)">&nbsp4/F&nbsp </button></td>
+                <td align="center"><button id="5" class="liftBtn" onclick="showPic(this.id)">&nbsp5/F&nbsp </button></td>
+              </tr>
+              <tr>
+                <td align="center"><button id="0" class="liftBtn" onclick="showPic(this.id)">&nbspG/F&nbsp </button></td>
+                <td align="center"><button id="1" class="liftBtn" onclick="showPic(this.id)">&nbsp1/F&nbsp </button></td>
+                <td align="center"><button id="2" class="liftBtn" onclick="showPic(this.id)">&nbsp2/F&nbsp </button></td>
+              </tr>
+            </tbody>
+        </table>
+        <script>
+        var qrLabel = ["G/F", "1/F", "2/F", "3/F", "4/F", "5/F", "6/F", "7/F"]
+        var qrImgSrc = [
+            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAIAAABKoV4MAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwwAADsMBx2+oZAAAABh0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMS4xYyqcSwAAAUFJREFUWEfVldFtxTAMAzNLN+j+U3SiFvARxb2och20QJyDgceQkvj5jo+398X3KY6BNeCcFidvj3rWOjyTngEO2Fm/uVM9Jwy+Z4xnzPrNZ9Y7RQPO+s1n1oNnrNdv7lTf4ZncKJDC+s096lceay7r9Glx8u6uZ2Ed1/ydXeupqSSektFBLGH/7np/mASDWBfxbtUvEJgEg1gX8W7VwdZcX4XdSuLB3fW2rP8L37QGnF3rcaBzoDoVZn7AMRpwoHOgOhVmXkiyTN3CATtogw9x+FnHy4ADdtAGH+Kc/gEnLwuFud+RoVPH5L2sibnfkSGf7ujqcSBWwSna7FTPkMGvM1VXSH/hYfWQeFAd49Q6PLLeZHQQaxCrkHiwU31HN1PPVTxT9R71K481YNe6QmoSmFPH5OXGgF3rCqlJ8M1xfAEeVB5VZyBuXQAAAABJRU5ErkJggg==",
+            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAIAAABKoV4MAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwwAADsMBx2+oZAAAABh0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMS4xYyqcSwAAASJJREFUWEfVlcEJw1AMQzNLN+j+U3SiFixBX2L8cUKhzuMfFNmWjtlej2fzvRMbsBUcDhdvRr3vCrjjtoSmop85qd5JQD53MtwU/cx71nMq6PQz719PLfqZk+oruOOMhKainzmjvvN0xrJKHw4X79/1OujDGuprTK1XdMbjwFZgK7AV2AL0Z9TTIpXfgbdZG1rSpPI78DZrQ4tayLmGIxIeB5PqhZxfwUxq8e/6PjyQzvSn0ifgmXSmP5UuVyvWV53pDk/arK860x2HP+Di5YjKWcPNGfX6qMj11ILOWpNJ9Voi8qsdOtQnuFk94U6G06zNLes5rdBOxuNgUn1FteO8Au5QCzsj6jtPB4IRgg41kb/j0LF4zgh064+ADjWR/2XbPr/CNj2Z1dK1AAAAAElFTkSuQmCC",
+            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAIAAABKoV4MAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwwAADsMBx2+oZAAAABh0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMS4xYyqcSwAAATRJREFUWEfVlcGNxDAMA7eW6+D6r+IqygEaPpgQCgQ/Ns7AD2Voi898/n5+h+cwPoU+CjeXhzdnj3qedXR3qASpYr5zp3ptMvB+Bzz1GeY731kPumTg5zvfVq+g6Mx85071HXlHmwLS+c496ieHZ17TzZeHN+fpeh7MocZRsMRO9dpXSBVSRucdv8OcPF2fKCnSrNHtwZ9QUqRZo9sjRQwYSLMGe+BkTh8FBtKswR5I08LVNbSiYXLnW/V8gFThxufE05zBDbNAgVThxufE05zBDfMpnpCvMIniojNP11/+gDfn9KzAwL3x2dmjXl8N3Z1c6oYZ3DDDTvXEDj7rFRdShgJDgaHgZfUKijTQeUd3XlnP7OATxQ071XdM7iRZjzmxRf3kaIehFYVU4cZncPNo/XH8A6Bb7nY0F0ePAAAAAElFTkSuQmCC",
+            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAIAAABKoV4MAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwwAADsMBx2+oZAAAABh0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMS4xYyqcSwAAAUdJREFUWEfVlcGNwzAMBF1LOrj+q7iKcoCGj5EpGjzEQOSBgKxHIveZ4/f10zzvwTEgAwYwp8GLs0c9YxX5TbQNQon+zp3qY5/A+02H/s6n1duTAQP9nU+r79DfuVN9RfUm9gl8f+ce9Z3DmGuqfBq8ON+uZ+C/uIwMmD471XsF2fQ9xmSPWShn0/cYkz0myApzL7F6MJnpY4C5l1g9yGZS5M+ptuEnfEH+nGobflHpfC9shjDxY6V8L2yGyfCRieuBjTNgwCZnmAwfmbge2DgDBmxyhjD89JmGE9nbLDI/fabhRPY2i3z6B7w4DBgvyviWvODUcXFYZNgQHwnfkhdUq43fxNjAhgyYjG8jb1TPhcHnN2SDBxtnmMzD6sG3kE2GNxDmYfX2zhXVG/xO9RX5TQyL7DEm+z3qOycmxGKdsKnyV+uP4w8yl4np8ea73gAAAABJRU5ErkJggg==",
+            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAIAAABKoV4MAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwwAADsMBx2+oZAAAABh0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMS4xYyqcSwAAAUZJREFUWEfdlcltw0AQBBWLM3D+USgiGZjqR1PNWYzAh5YuLKBmzfXU4/nzO3yv4FFkfhtcvD3OM9aRPRwDN+T5zp3Os8LBew94NZnv/C/n3cx33u28+y7Pd+50viN7tKmQMuY79zg/eYz5yS6/DS7et88zMIczIFWkmbDTeVaAVCFlpF8bctKekSqkjPRrQ06oihNV4K/Q7cGLE1Xgr9DtwR/wAvk6bIM0B7xMvg7b4GD4AKlA5Q/RcIN6+AFVApU/RMMNJz0ocEPuoCfJameEXOGG3EFPktUTo98xrIA0gHfckwVqjsaKNIB33JPF2z/g4vkw2UnvxrOzx3l9Nax7WA1ShVThhgw7nafs4PO8V8lr6HRUuNl592Rw47lDPTc+D2663LHT+Y7sYTVIBVnFHNji/ORpR8GsPgqM454Mbr56/vX6AzFkEmEH/zNSAAAAAElFTkSuQmCC",
+            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAIAAABKoV4MAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwwAADsMBx2+oZAAAABh0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMS4xYyqcSwAAATRJREFUWEfdlcsNwlAMBKmFDui/CioKkmcPmxg/GYEUh9GTcMafPXJ73h/NtxXcDMxhcfFmxLNWkWeUlqDbvzkpXjcMvM9kNBpg+jevGe9dasD0b14tXo0AA276NyfFV+QZP+Q19G/OiO881jysqg+Li3d2PAt9PIYaMJ8yKV6XAqlAqqCacU+dmRGfhzAg9QXVnbPjHVfUv4KbkI3wBvWv4CZk8yas8n24ULGb4cOpfB8uVJQzZSPwLrXj3mvAQDaibATepXbcew0YkOGnz255CTPghlqg+vgWdQUz4IZaHP4BF+/NclB58C61MyNeXwV5hnOOGoGU4Z4aJsXTdvA5PuPzgAEpQ42LxasRuKF28BWa+ZN4wEA2mUnxFXnGT3vtZI/ZMSK+83QjYHddw9qcGr9tL3g47nbETrObAAAAAElFTkSuQmCC",
+            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAIAAABKoV4MAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwwAADsMBx2+oZAAAABh0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMS4xYyqcSwAAATVJREFUWEfdlVGqwzAMBHOW3qD3P0VP1IJ2P6ZRZBRqiNPBEHVs7cL7edvr8Wyed7ABmcxucXDWqPdeQX7j/sAK9DNXqncekOebDv3Mu9XTE/p+5t3qha8DK9DPXKm+ovOG9DPXqO8crfEPWM27xcG5ul4LZ2EZ57OsVM8gzSR7GdL3MgeKM8lehvS9zFcoZyEzC4cGNv5QAZlZODSw8YcKyPxClSP/7/XEoYGNP1RAZhYODbIpy2bdchYyxi4x65azKNcqFNGHW5rJ1fW7/4CD4w2QQ2nyfMCuY3AURJTgHwFNng+oognfeC2QIb4o4BvPC9XrgsjnN5qFjLAKaDSLL3OzeuFrkL0M8UVgc7N6XwQywiqwCrIR8ivVV+Q32vWPgIYzyX6N+s7xRkGOFvR5vrR+2z6rp9GhlOfc9QAAAABJRU5ErkJggg==",
+            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAIAAABKoV4MAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwwAADsMBx2+oZAAAABh0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMS4xYyqcSwAAAT1JREFUWEfVldttwzAQBFWLO0j/VaQiB+Dsx0rrIw5WAFIDAjrPPfbTx+/rp/neg6OALlwWJ2+PeO0V5IwyDTUG/Zs7xeuSgfcZ8C41YPo3nxbvHjCA6d98WnyH/s2d4iuqGd0bSA36N/eI7zzWPKyqL4uTtzqehe/wSK/77BTvJ6gd99SAcdQw0mM+KK8d99SAcdQw0mNOqDNIcx9uQpoV8foYmP+iuolfHZ9kG3MfnRukEdnA3EfnBmkEDZAauPEa3FCDG2pII2iA1MCN1+CGGtxQgwyfPr4MGMd91s7q+Ms/4ORpY1CdA7qQ5sQlY/I4BOzqR0AX0pzI04nPsFXVkAbcq94onoaDr2YwIBVk92QeFp/4JKQBPMg8LN59h2oev1N8Rc5oOfAutZN+j/jO00bw4aiZeb00/jj+AGiOTiUA3doIAAAAAElFTkSuQmCC",
+        ];
+        var btns = document.getElementById('btns');
+        var qr = document.getElementById('qr');
+        var imgQR = document.getElementById('imgQR');
+        var labQR = document.getElementById('labQR');
+    
+        function showPic(clicked) {
+            imgQR.src = qrImgSrc[clicked];
+            labQR.textContent=qrLabel[clicked];
+            btns.style.visibility = "collapse";
+            qr.style.visibility = "visible";
+        }
+
+        function showButtons() {
+            btns.style.visibility = "visible";
+            qr.style.visibility = "collapse";
+        }
+      </script>
+    </body>
+    </html>
